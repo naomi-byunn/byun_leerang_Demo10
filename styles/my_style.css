@@ -1,1 +1,28 @@
+.bg-info {
+  background-color: #519872 !important;
+}
 
+.navbar-light .navbar-brand {
+  color: #bec5ad;
+}
+
+.btn-primary {
+  color: #3b5249;
+  background-color: #519872;
+  border-color: #3b5249;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #3b5249;
+  border-color: #519872;
+}
+
+body {
+  background-color: #a4b494;
+}
+
+.navbar-brand {
+  font-family: "Indie Flower", cursive;
+  font-size: 2.25rem;
+}

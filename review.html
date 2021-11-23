@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>My BCIT Project</title>
-    <meta name="comp1800 template" content="my bcit Hiking App project">
+    <meta name="comp1800 template" content="my bcit Hiking App project" />
 
     <!-- Optional styles and scripts of your own -->
-    <link type="text/css" href="styles/my_style.css">
+    <link type="text/css" href="styles/my_style.css" />
 
     <!-- Bootstrap FirebaseUI CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
 
     <!-- Firebase 8 CDNs-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -22,53 +25,243 @@
 
     <!-- Link to the api keys for your firebase project -->
     <script src="/scripts/firebaseAPI_TEAM99.js"></script>
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <!-------------------------------------->
     <!-- The following is HTML for layout -->
     <!-------------------------------------->
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-light bg-info">
-        <div class="container-fluid">
-            <a class="navbar-brand">Hiking App</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="login.html">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Navigate</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Saved</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="profile.html">Profile</a>
-                    </li>
-                </ul>
-            </div>
+      <div class="container-fluid">
+        <a class="navbar-brand">Hiking App</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="index.html"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="login.html">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Navigate</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Saved</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="profile.html">Profile</a>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
 
+    <h1>Review for <span id="HikeName"></span></h1>
 
-    
+    <form>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Add a title</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          placeholder="Title"
+        />
+      </div>
+      <br />
+      <div class="form-group">
+        <label for="exampleFormControlSelect1"
+          >What was the level of the hike?</label
+        >
+        <select class="form-control" id="level">
+          <option>Hard</option>
+          <option>Moderate</option>
+          <option>Easy</option>
+        </select>
+        <br />
+        <div class="form-group">
+          <label for="exampleFormControlSelect1"
+            >Which season did you do the hike?</label
+          >
+          <select class="form-control" id="season">
+            <option>Fall</option>
+            <option>Winter</option>
+            <option>Spring</option>
+            <option>Summer</option>
+          </select>
+          <br />
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1"
+            >What did you think of the trail?</label
+          >
+          <textarea class="form-control" id="description" rows="3"></textarea>
+        </div>
+        <br />
+        <!--Flooded-->
+        <label
+          >Flooded <span style="display: inline-block; width: 26pt"></span
+        ></label>
+
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="flooded"
+            value="Yes"
+          />
+          <label>Yes</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="flooded"
+            value="No"
+          />
+          <label>No</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="flooded"
+            value="unSure"
+            checked=""
+          />
+          <label>Not sure</label>
+        </div>
+        <br />
+        <!--Scramble-->
+        <label
+          >Scramble <span style="display: inline-block; width: 20pt"></span
+        ></label>
+
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="scrambled"
+            value="Yes"
+          />
+          <label>Yes</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="scrambled"
+            value="No"
+          />
+          <label>No</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="scrambled"
+            value="unSure"
+            checked=""
+          />
+          <label>Not sure</label>
+        </div>
+
+        <br />
+        <div class="d-flex justify-content-end">
+          <button
+            type="button"
+            class="btn btn-lg btn-primary pull-right"
+            onclick="writeReview()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </form>
+
     <!--------------------------------------------------------------------->
     <!-- JS files: Your own JavaScript functions included here    -->
     <!--------------------------------------------------------------------->
     <!-- <script src="./scripts/my_script.js"></script> -->
-    
-    
+    <script>
+      let hikeID = localStorage.getItem("hikeID");
 
-</body>
+      db.collection("Hikes")
+        .where("code", "==", hikeID)
+        .get()
+        .then((queryHike) => {
+          //see how many results you have got from the query
+          size = queryHike.size;
+          // get the documents of query
+          Hikes = queryHike.docs;
 
+          // We want to have one document per hike, so if the the result of
+          //the query is more than one, we can check it right now and clean the DB if needed.
+          if ((size = 1)) {
+            var thisHike = Hikes[0].data();
+            name = thisHike.name;
+            document.getElementById("HikeName").innerHTML = name;
+          } else {
+            console.log("Query has more than one data");
+          }
+        })
+        .catch((error) => {
+          console.log("Error getting documents: ", error);
+        });
+
+      function writeReview() {
+        let Title = document.getElementById("title").value;
+        let Level = document.getElementById("level").value;
+        let Season = document.getElementById("season").value;
+        let Description = document.getElementById("description").value;
+        let Flooded = document.querySelector(
+          'input[name="flooded"]:checked'
+        ).value;
+        let Scrambled = document.querySelector(
+          'input[name="scrambled"]:checked'
+        ).value;
+
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            var currentUser = db.collection("users").doc(user.uid);
+            var userID = user.uid;
+            //get the document for current user.
+            currentUser.get().then((userDoc) => {
+              //get user Email
+              var userEmail = userDoc.data().email;
+              // Start a new collection and add all data in it.
+              db.collection("Reviews").add({
+                code: hikeID,
+                UserID: userID,
+                UserEmail: userEmail,
+                Title: Title,
+                Level: Level,
+                Season: Season,
+                Description: Description,
+                Flooded: Flooded,
+                Scrambled: Scrambled,
+              });
+            });
+          } else {
+            // No user is signed in.
+            console.log("no user signed in");
+          }
+        });
+      }
+    </script>
+  </body>
 </html>

@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>My BCIT Project</title>
-    <meta name="comp1800 template" content="my bcit Hiking App project">
+    <meta name="comp1800 template" content="my bcit Hiking App project" />
 
     <!-- Optional styles and scripts of your own -->
-    <link type="text/css" href="styles/my_style.css">
+    <link type="text/css" href="styles/my_style.css" />
 
     <!-- Bootstrap FirebaseUI CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
 
     <!-- Firebase 8 CDNs-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -22,49 +25,159 @@
 
     <!-- Link to the api keys for your firebase project -->
     <script src="/scripts/firebaseAPI_TEAM99.js"></script>
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <!-------------------------------------->
     <!-- The following is HTML for layout -->
     <!-------------------------------------->
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-light bg-info">
-        <div class="container-fluid">
-            <a class="navbar-brand">Hiking App</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="login.html">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Navigate</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Saved</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="profile.html">Profile</a>
-                    </li>
-                </ul>
-            </div>
+      <div class="container-fluid">
+        <a class="navbar-brand">Hiking App</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="index.html"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="login.html">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Navigate</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Saved</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="profile.html">Profile</a>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
 
+    <div class="container">
+      <h1>User Profile</h1>
+      <form>
+        <fieldset class="mb-3" id="personalInfoFields" disabled>
+          <div class="form-group">
+            <label>Name</label>
+            <input
+              type="text"
+              id="nameInput"
+              class="form-control"
+              placeholder="Enter your name"
+            />
+          </div>
+          <div class="form-group">
+            <label>School</label>
+            <input
+              type="text"
+              id="schoolInput"
+              class="form-control"
+              placeholder="Enter your school"
+            />
+          </div>
+          <div class="form-group">
+            <label>City</label>
+            <input
+              type="text"
+              id="cityInput"
+              class="form-control"
+              placeholder="Enter your city"
+            />
+          </div>
+        </fieldset>
+        <div class="d-flex justify-content-end mt-5">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            onclick="editUserInfo()"
+          >
+            Edit
+          </button>
+          <span style="width: 10px"></span>
+          <button type="button" class="btn btn-info" onclick="saveUserInfo()">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
     <!--------------------------------------------------------------------->
     <!-- JS files: Your own JavaScript functions included here    -->
     <!--------------------------------------------------------------------->
     <!-- <script src="./scripts/my_script.js"></script> -->
+    <script>
+      var currentUser;
+      function populateInfo() {
+        firebase.auth().onAuthStateChanged((user) => {
+          // Check if user is signed in:
+          if (user) {
+            //go to the correct user document by referencing to the user uid
+            currentUser = db.collection("users").doc(user.uid);
+            //get the document for current user.
+            currentUser.get().then((userDoc) => {
+              //get the data fields of the user
+              var userName = userDoc.data().name;
+              var userSchool = userDoc.data().school;
+              var userCity = userDoc.data().city;
 
-</body>
+              //if the data fields are not empty, then write them in to the form.
+              if (userName != null) {
+                document.getElementById("nameInput").value = userName;
+              }
+              if (userSchool != null) {
+                document.getElementById("schoolInput").value = userSchool;
+              }
+              if (userCity != null) {
+                document.getElementById("cityInput").value = userCity;
+              }
+            });
+          } else {
+            // No user is signed in.
+            console.log("No user is signed in");
+          }
+        });
+      }
 
+      //call the function to run it
+      populateInfo();
+
+      function editUserInfo() {
+        //Enable the form fields
+        document.getElementById("personalInfoFields").disabled = false;
+      }
+
+      function saveUserInfo() {
+        userName = document.getElementById("nameInput").value; //get the value of the field with id="nameInput"
+        userSchool = document.getElementById("schoolInput").value; //get the value of the field with id="schoolInput"
+        userCity = document.getElementById("cityInput").value; //get the value of the field with id="cityInput"
+
+        currentUser
+          .update({
+            name: userName,
+            school: userSchool,
+            city: userCity,
+          })
+          .then(() => {
+            console.log("Document successfully updated!");
+          });
+        document.getElementById("personalInfoFields").disabled = true;
+      }
+    </script>
+  </body>
 </html>
